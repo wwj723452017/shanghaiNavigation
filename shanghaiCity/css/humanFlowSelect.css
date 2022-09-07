@@ -1,0 +1,57 @@
+nav{
+    position: relative;
+    width: 300px;
+    height:40px;
+    background-color: rgba(35, 106, 169, 0.653);
+    border-radius: 11px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+nav a{
+    position: relative;
+    display: block;
+    float: left;
+    font-size:15px;
+    line-height: 25px;
+    width: 50px;
+    height:50px;
+    color:#fff;
+    text-transform:uppercase;
+    text-decoration:none;
+    text-align:center;
+    z-index: 10;
+}
+
+
+nav .animation{
+    position: absolute;
+    height: 100%;
+    width: 50px;
+    background-color: #F97F51;
+    z-index: 9;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+nav a:nth-child(1):hover~.animation{
+    width:50px;
+    left:0px;
+}
+nav a:nth-child(2):hover~.animation{
+    width:50px;
+    left:50px;
+}
+nav a:nth-child(3):hover~.animation{
+    width:50px;
+    left:100px;
+}
+nav a:nth-child(4):hover~.animation{
+    width:50px;
+    left:150px;
+}
+nav a:nth-child(5):hover~.animation{
+    width:50px;
+    left:200px;
+}
+nav a:nth-child(6):hover~.animation{
+    width:50px;
+    left:250px;
+}

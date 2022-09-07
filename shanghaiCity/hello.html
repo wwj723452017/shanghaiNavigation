@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>欢迎</title>
+    <style>
+        body {
+            display: flex;
+     
+            background-color: rgb(255, 255, 255);
+        }
+        .a{
+            position: relative;
+            top: 0px;
+            width: 100%;
+            height: 100vh;
+            background-image: url("img/bg5.jpg");
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            overflow: hidden;
+        }
+        .b,
+        .c,
+        .d,
+        .e{
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            /* 设置阴影 */
+            filter: drop-shadow(4px 4px 12px rgba(0,0,0,.5));
+            background-size: cover;
+            opacity: .7;
+            transition: .5s;
+        }
+        .b::after,
+        .c::after{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-image: url("img/bg6.jpg");
+        }
+        .d::after,
+        .e::after{
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            background-image: url("img/bg1.jpg");
+        }
+        .b{
+            left: -600px;
+            transform: rotateZ(100deg);
+            overflow: hidden;
+            z-index: 9;
+        }
+        .b::after{
+            transform: rotateZ(-100deg);
+        }
+
+        .c{
+            z-index: 11;
+            left: -600px;
+            transform: rotateZ(-100deg);
+            overflow: hidden;
+        }
+        .c::after{
+            transform: rotateZ(100deg);
+        }
+
+        .d{
+            z-index: 11;
+            right: -600px;
+            transform: rotateZ(105deg);
+            overflow: hidden;
+        }
+        .d::after{
+            transform: rotateZ(-105deg);
+        }
+
+        .e{
+            z-index: 9;
+            right: -600px;
+            transform: rotateZ(-100deg);
+            overflow: hidden;
+        }
+        .e::after{
+            transform: rotateZ(100deg);
+        }
+        .f{
+            font-family: '华文楷体';
+            position: absolute;
+            z-index:12;
+            text-shadow: 5px 5px 5px #4f4f4f;
+            opacity: 0;
+            font-size: 160px;
+            color: rgb(255, 250, 250);
+            transition: .5s;
+            margin: 0;
+            padding: 0;
+            font-weight: 200;
+            /* padding-bottom: 80px; */
+        }
+        .f1{
+            left: 42%;
+            top: 6%;
+            font-size: 170px;
+        }
+        .f2{
+            left: 52%;
+            top: 18%;
+        }
+        .f3{
+            left: 38%;
+            top: 24%;
+            font-size: 260px;
+        }
+        .f4{
+            left: 51%;
+            top:43%;
+            
+        }
+        .f5{
+            left: 41%;
+            top:55%;
+            
+        }
+        .f6{
+            left: 47%;
+            top:63%;
+            font-size: 260px;
+        }
+        /* 设置动画 */
+        .a:hover .b{
+            left: -700px;
+        }
+        .a:hover .c{
+            left: -800px;
+        }
+        .a:hover .d{
+            right: -700px;
+        }
+        .a:hover .e{
+            right: -810px;
+        }
+        .a:hover .f{
+            opacity: 1;
+        }
+    </style>
+</head>
+    <div class="a">
+        <div class="b"></div>
+        <div class="c"></div>
+        
+        <div class="d"></div>
+        <div class="e"></div>
+        <div id="theText" onclick="clickText">
+            <p class="f f1">上</p>
+            <p class="f f2">海</p>
+            <p class="f f3">文</p>
+            <p class="f f4">化</p>
+            <p class="f f5">之</p>
+            <p class="f f6">旅</p>
+        </div>
+    </div>
+<body>
+    <script>
+        var theTextDiv = document.getElementById("theText");
+        theTextDiv.onclick = function(){
+            window.location.href='/index.html'; 
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+html,
+body,
+
+#container {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+#littleMap {
+   position: absolute;
+   width: 230px;
+   height:230px;
+   background-color: white;
+   left: 950px;
+   bottom: 0;
+   border:10px solid rgb(255, 255, 255);
+}
+.tooltip{
+    position: absolute;
+    top: 0;
+    width: 120;
+    height: auto;
+    font-family: simsun;
+    font-size: 14px;
+    text-align: center;
+    border-style: solid; 
+    border-width: 1px;
+    background-color: white;
+    border-radius: 5px;
+}
+#circleTree{ 
+	position:absolute;
+	width: 100%;
+	height: 48%;
+	bottom: 51%;
+	align-items: center;
+	/* border-bottom: #333333 solid 2px; */
+}
+#chart{
+	/* transform: translateY(40px); */
+	/* border-top: #4d4d4d solid 2px; */
+	position: absolute;
+	top: 52%;
+}
+#chartText{
+	position: absolute;
+	top: 379px;
+	left: 150px;
+	font-weight: bold;
+}
+#chartLabelImg{
+	position: absolute;
+	width: 120px;
+	top: 380px;
+}
+#circleTreeText{
+   position: absolute;
+   left: 140px;
+   font-weight: bold;
+}
+.amap-marker-label{
+    font-size: 16px;
+    line-height: 18px;
+    text-align: center;
+    height: 18px;
+    font-family: STLiti;
+    color: green;
+    border-radius: 15px;
+    background-color: rgba(255,255,255,0.4);
+    border: solid 2px rgba(100,255,200,0.8);
+}
+
+
+/* 去掉高德左下角的图标 */
+.amap-logo{
+	display: none;
+	opacity:0 !important;
+}
+.amap-copyright {
+	opacity:0;
+}
+
+#rightViewer{
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 25%;
+	background-color: rgb(255, 255, 255);
+	box-shadow: 4px 4px 4px 6px rgb(168, 168, 168);
+}
+
+
+#clickBuilding{
+	padding: 20px;
+	text-align: center;
+	position: relative;
+	/* background-color: #333333; */
+}
+#notClickBuilding{
+	height: 100%;
+}
+.clickBuildingImg{
+    /* position: absolute; */
+	transform: translateY(-510px);
+	width: 220px;
+	height: 150px;
+	border-radius: 8%;
+	box-shadow:1px 1px 5px rgb(102, 102, 102);
+}
+.clickBuildingInfoBoard{
+    /* position: relative; */
+	height: 500px;
+	transform: translateY(50px);
+	width:100%;
+	border-radius: 8%;
+	background-color: #ffffff;
+}
+.buildingOpen{
+	font-size: 14px;
+	font-weight:bold;
+	margin: 4px;
+	font-family: '华文楷体';
+}
+.sell{
+	font-size: 14px;
+	font-weight:bold;
+	margin: 4px;
+	font-family: '华文楷体';
+}
+.clickBuildingInfo{
+	transform: translateY(90px);
+	/* background-color: antiquewhite; */
+	margin: 0 30px;
+	color: #4d4d4d;
+}
+.buildingName{
+	font-family: '华文楷体';
+	font-weight: bold;
+	font-size: 27px;
+	animation:fadeInAnimation ease 3s;
+}
+
+.buildingInfo{
+	font-family: '华文楷体';
+	font-size: 16px;
+	margin-top: 8px;
+}
+.goInBuilding{
+	margin-top: 30px;
+	width: 120px;
+	height: 40px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	font-weight: bold;
+	background: rgb(230, 230, 230);
+	color: #000000;
+}
+@keyframes fadeInAnimation{
+	0%{
+		opacity:0;
+	}
+	100%{
+		opacity:1;
+	}
+}
+/* 信息窗体的样式 */
+.content-window-card {
+	position: relative;
+	box-shadow: none;
+	bottom: 0;
+	left: 0;
+	width: auto;
+	padding: 0;
+}
+
+.content-window-card p {
+	height: 2rem;
+}
+
+.custom-info {
+	border: solid 1px silver;
+}
+
+div.info-top {
+	position: relative;
+	background: none repeat scroll 0 0 #F9F9F9;
+	border-bottom: 1px solid #CCC;
+	border-radius: 5px 5px 0 0;
+}
+
+div.info-top div {
+	display: inline-block;
+	color: #333333;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 31px;
+	padding: 0 10px;
+}
+
+
+div.info-middle {
+	font-size: 12px;
+	padding: 10px 6px;
+	line-height: 20px;
+}
+
+div.info-bottom {
+	height: 0px;
+	width: 100%;
+	clear: both;
+	text-align: center;
+}
+
+.info-middle img {
+	float: left;
+	margin-right: 6px;
+	width: 100px;
+}

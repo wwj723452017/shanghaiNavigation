@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <!-- 样式 -->
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/indexSelect.css">
+	<link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <title>上海文化之旅</title>
+    <script>
+        delete window.AMap;
+    </script>
+    <script src="//a.amap.com/jsapi_demos/static/demo-center/js/demoutils.js"></script>
+    
+	<!-- d3 -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script>
+      var d3version3 = d3
+      window.d3=null
+    </script> -->
+
+	<script src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	
+	<!-- 圆树引入 -->
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <script src="./d3.v5.min.js"></script>
+
+	<!-- vue -->
+	<script src="./vue.js"></script>
+	<!-- 高德-->
+	<script type="text/javascript">
+		window._AMapSecurityConfig = {
+			securityJsCode:'6d72db2665fc98c04c645823bdfa1ad3',
+		}
+	</script>
+    <script src="//webapi.amap.com/maps?v=1.4.15&key=acf36e8a4b83979b2bb63f6982cc3863&plugin=AMap.ControlBar,Map3D,ElasticMarker,AMap.DistrictSearch"></script>
+    <!-- 图表引用 -->
+	<script src="longitude and latitude.js"></script>
+	<link rel="stylesheet" href="matirix/style.css"/>
+</head>
+<body>
+<!-- 地图 -->
+<div id="container"></div>  
+<div id="littleMap"></div>
+<!-- 左侧视图区 -->
+<div id="leftViewer">
+	<!-- 展示与隐藏侧边栏 开始-->
+	<input type="checkbox" id="menu-btn">
+	<label for="menu-btn"><i class="iconfont icon-yemianfanhui"></i></label>
+	<!-- 展示与隐藏侧边栏 结束-->
+	<div class="menu">
+		<!-- 侧边栏的标题 开始-->
+		<div class="menu-title">
+			<h1>筛选</h1>
+		</div>
+		<!-- 侧边栏的标题 结束-->
+
+		<!-- 每一项导航 -->
+		<div class="menu-item">
+			<input type="checkbox" id="menu-item1">
+			<label for="menu-item1">
+				<i class="menu-item-icon iconfont icon-a-01-shujuzhongxin"></i>
+				<span>类型</span>
+				<span style="font-size: 16px;">{{cata}}</span>
+				<i class="menu-item-last iconfont icon-down"></i>
+			</label>
+			<div class="menu-content">
+
+				<span v-on:click="pickCata(1)" :class=" picks1[1]?'menu-content-span-click':'menu-content-span'">博物馆</span>
+				<span v-on:click="pickCata(2)" :class="picks1[2]?'menu-content-span-click':'menu-content-span'">老洋房</span>
+				<span v-on:click="pickCata(3)" :class="picks1[3]?'menu-content-span-click':'menu-content-span'">故居</span>
+				<span v-on:click="pickCata(4)" :class="picks1[4]?'menu-content-span-click':'menu-content-span'">其他</span>
+			</div>
+		</div>
+
+		<div class="menu-item">
+			<input type="checkbox" id="menu-item2">
+			<label for="menu-item2">
+				<i class="menu-item-icon iconfont icon-a-02-kechengguanli"></i>
+				<span>人流量</span>
+				<span style="font-size: 16px;">{{humanFlow}}</span>
+				<i class="menu-item-last iconfont icon-down"></i>
+			</label>
+			<div class="menu-content">
+				<span v-on:click="pickHuman(1)" :class=" picks2[1]?'menu-content-span-click':'menu-content-span'">0~150</span>
+				<span v-on:click="pickHuman(2)" :class=" picks2[2]?'menu-content-span-click':'menu-content-span'">151~300</span>
+				<span v-on:click="pickHuman(3)" :class=" picks2[3]?'menu-content-span-click':'menu-content-span'">301~500</span>
+				<span v-on:click="pickHuman(4)" :class=" picks2[4]?'menu-content-span-click':'menu-content-span'">>500</span>
+			</div>
+		</div>
+
+		<div class="menu-item">
+			<input type="checkbox" id="menu-item3">
+			<label for="menu-item3">
+				<i class="menu-item-icon iconfont icon-a-04-zixunfabu"></i>
+				<span>票价</span>
+				<span style="font-size: 16px;">{{sell}}</span>
+				<i class="menu-item-last iconfont icon-down"></i>
+			</label>
+			<div class="menu-content">
+				<span v-on:click="pickSell(1)" :class=" picks3[1]?'menu-content-span-click':'menu-content-span'">免费</span>
+				<span v-on:click="pickSell(2)" :class=" picks3[2]?'menu-content-span-click':'menu-content-span'">低于50元</span>
+				<span v-on:click="pickSell(3)" :class=" picks3[3]?'menu-content-span-click':'menu-content-span'">低于100元</span>
+				<span v-on:click="pickSell(4)" :class=" picks3[4]?'menu-content-span-click':'menu-content-span'">低于150元</span>
+			</div>
+		</div>
+
+		<div class="set-line"></div>
+
+		<div class="menu-item">
+			<label>
+				<i class="menu-item-icon iconfont icon-a-08-shezhi"></i>
+				<span>setting</span>
+			</label>
+		</div>
+	</div>
+</div>
+
+<!-- 右侧视图区 -->
+<div id="rightViewer">
+
+	<!-- 点击后 -->
+    <div id="clickBuilding" v-show="isShowInfo==true">
+		<!-- 景点图片 -->
+		<div class="clickBuildingInfoBoard">
+			<!-- 景点名称 -->
+			<div class="clickBuildingInfo">
+				<p class="buildingName">{{theName}}</p>
+				<span class="buildingOpen">{{openTime}}</span>
+                <span class="sell">票价：{{sell}}</span>
+				<div class="buildingInfo">
+                   {{theInfo}}
+				</div>
+				<!-- 进入按钮 -->
+				<button v-on:click="goIN" class="goInBuilding">进入图书馆</button>
+			</div>
+		</div>
+		<img class="clickBuildingImg" v-bind:src="theImg" >
+	</div>
+
+	<!-- 未点击 -->
+	<div id="notClickBuilding" v-show="isShowInfo==false">
+		<div id="circleTreeText">区域人流量径向图</div>
+		<div id="circleTree"></div>
+		<div id="chartText">推荐指数条形图</div>
+		<img id="chartLabelImg" src="https://img1.imgtp.com/2022/06/15/KP9Rpnl7.png"/>
+		<div id="chart"></div>
+	</div>
+	
+</div>
+
+<script src="./index.js"></script>
+<script src="./barChart.js"></script>
+<!-- <script src="./bubble.js"></script> -->
+<script  src="./radialtree.js"></script>
+</body>
+</html>

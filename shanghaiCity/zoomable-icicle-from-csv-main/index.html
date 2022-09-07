@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html style="padding: 20px;">
+<meta charset="UTF-8">
+
+<head>
+    <style>
+        #sortable {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 60%;
+        }
+
+        #sortable li {
+            margin: 0 3px 3px 3px;
+            padding: 0.4em;
+            padding-left: 1.5em;
+            font-size: 1.4em;
+            height: 18px;
+        }
+
+        #sortable li span {
+            position: absolute;
+            margin-left: -1.3em;
+        }
+
+        .fl {
+            float: left;
+        }
+    </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//unpkg.com/dc@4/dist/style/dc.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="lib/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.5.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.5.4/crossfilter.min.js"></script>
+
+    <script src="https://unpkg.com/dc@4/dist/dc.js"></script>
+
+    <script src="config.js"></script>
+    <script src="chart.js"></script>
+    <script src="zoomable.js"></script>
+    <svg id='chart'></svg>
+    <meta charset="utf-8">
+    <title>Zoomable Icicle</title>
+</head>
+
+<body>
+    <!-- <script>
+        $(function () {
+            breakCategories.forEach( k => {
+                $("#sortable").append(
+                    '<li id="' + k[0] + '" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' + k[1] + '</li>'
+                )
+            })
+            $("#sortable").sortable();
+            $("#sortable").disableSelection();
+            $("#sortable").on("sortstop", function(event, ui) {
+                var order = $("#sortable").sortable("toArray");
+                run(order, "All");
+            } );
+        });
+    </script> -->
+
+    <!-- <div>
+        <ul id="sortable">
+        </ul>
+    </div> -->
+
+    <!-- <div id="pies"></div> -->
+
+
+</body>
+
+</html>

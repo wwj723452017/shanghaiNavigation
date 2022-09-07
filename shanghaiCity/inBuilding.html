@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>上海博物馆</title>
+	<script src="libs/build/three.js"></script>
+	<script src="libs/js/controls/OrbitControls.js"></script>
+    <script src="libs/js/loaders/GLTFLoader.js"></script>
+    <script src="libs/js/renderers/CSS2DRenderer.js"></script>
+    
+    <script src="./vue.js"></script>
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//unpkg.com/dc@4/dist/style/dc.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="lib/lodash.min.js"></script>
+
+    <!-- d3的引入（不同版本） -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script>
+      var d3version3 = d3
+      window.d3=null
+    </script>
+
+    <!-- 这个的位置不要变 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.5.0/d3.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter2/1.5.4/crossfilter.min.js"></script>
+
+    <script src="https://unpkg.com/dc@4/dist/dc.js"></script>
+    <link rel="stylesheet" href="style.css"/>
+    
+    <!-- 关于气泡图的 -->
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+    <script src="config.js"></script>
+    <script src="chart.js"></script>
+    <script src="zoomable.js"></script>
+    
+   
+    
+	<style>
+		body {
+			/* 边距设置为0,设置溢出隐藏，完整的使用整个页面 */
+			margin: 0;
+			overflow: hidden;
+		}
+        #webgl-output{
+            width:60%;
+        }
+        #rightView{
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            right: 0;
+            top: 0;
+        }
+        #selectFloorDiv{
+            position: absolute;
+            width: 5vw;
+            left: 54vw;
+            top: 5vh;
+            background-color: rgb(255, 255, 255);
+            z-index: 5;
+            border-radius: 3%;
+        }
+        #selectFloorDiv>div{
+            background-color: rgb(245, 245, 245);
+            height: 50px;
+            margin: 10px;
+            padding: 10px;
+            text-align:center;
+            line-height: 56px;
+            border-bottom: 1px solid #DCDBDB;
+            font-size: 26px;
+            color: balck
+        }
+        #selectFloorDiv>div:hover {
+            background-color: #ececec;
+            color: #1890ff;
+        }
+        .floor-click{
+            border-left:  1px solid #ff9b18;
+            border-right:  1px solid #ff9b18;
+            color: #ff9b18;
+        }
+        .objectInfo{
+            position: absolute;
+            width: 66%;
+            height: 33%;
+            right: 0;
+            top: 0px;
+            background-color: #d2d2d2a0;
+            /* z-index: 10; */
+            animation:fadeInAnimation ease 3s;
+            z-index: -1;
+        }
+        #objectImg{
+            width: 100%;
+        }
+        #objectDescription{
+            position: absolute;
+            font-family: '华文楷体';
+            top: 20px;
+            width: 48%;
+            display: inline-block;
+            font-size: 19px;
+        }
+        #objectNameAndImg{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            display: inline-block;
+        }
+        #objectName{
+            text-align: center;
+            font-family: '华文楷体';
+            font-size: 30px;
+            color: #000000;
+        }
+        .label{
+            background-color: #DCDBDB;
+            text-align: center;
+        }
+        .labelText{
+            font-family: '华文楷体';
+            font-size: 20px;
+            text-align: center;
+        }
+        .labelImg{
+            margin:0 auto;
+            width:100px;
+        }
+        #my_dataviz{
+            /* position:absolute; */
+            /* bottom: 0; */
+            width: 100%;
+        }
+
+        .bubbles {
+            stroke-width: 2px;
+            stroke: white;
+        }
+
+        .bubbles:hover {
+            stroke: black;
+        }
+        #my_dataviz{
+            margin-left: 60px;
+        }
+        @keyframes fadeInAnimation{
+            0%{
+                opacity:0;
+            }
+            100%{
+                opacity:1;
+            }
+        }
+	</style>
+</head>
+
+<body>
+	<!-- 将在div里面输出画面 -->
+	<div id="webgl-output"></div>
+    
+    <div id="selectFloorDiv">
+        <div v-on:click="chooseFloor(3)" :class="picks[3]?'floor-click':'floor-noClick'">
+            F4
+        </div>
+        <div v-on:click="chooseFloor(2)" :class="picks[2]?'floor-click':'floor-noClick'">
+            F3
+        </div>
+        <div v-on:click="chooseFloor(1)" :class="picks[1]?'floor-click':'floor-noClick'">
+            F2
+        </div>
+        <div v-on:click="chooseFloor(0)" :class="picks[0]?'floor-click':'floor-noClick'">
+            F1
+        </div>
+    </div>
+
+	<div id="rightView">
+        <svg id='chart'></svg>
+        <div class="objectInfo">
+            <!-- 对应的图片和简介 -->
+            <!-- 文物名称 -->
+            <div id="objectDescription"></div>
+            <div id="objectNameAndImg">            
+                <div id="objectName"></div>  
+                <img id="objectImg" src="">
+            </div>
+        </div>
+        <!-- 热力图 -->
+        <div class="days-hours-heatmap">
+            
+        </div>
+        <!-- 气泡图 -->
+        <div id="my_dataviz"></div>
+    </div>
+    
+    <script src="./inBuilding.js"></script>
+    <script src="./index-radialtree.js"></script>
+    <script src="./heatMap.js"></script>
+</body>
+
+</html>
